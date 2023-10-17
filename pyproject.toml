@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "scrapper"
+version = "0.1.0"
+description = ""
+authors = ["AusAura <91804331+AusAura@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Scrapy = "^2.11.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
