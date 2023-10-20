@@ -1,15 +1,13 @@
-from typing import Iterable
+from typing import Iterable, Union
 import scrapy
 from scrapy.http import Request
 import logging
 # import pdb
 
-# C:\\Users\\Professional\\Documents\\GitHub\\Scrapper\\
 # Настройка логгирования
 logging.basicConfig(filename='app.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 # scrapy crawl authors
-
 
 class AuthorsSpider(scrapy.Spider):
     name = "authors"
@@ -26,7 +24,7 @@ class AuthorsSpider(scrapy.Spider):
     def start_requests(self) -> Iterable[Request]:
         yield scrapy.FormRequest(self.login_url, formdata={'username': 'admin', 'password': 'admin'}, callback=self.after_login)
 
-    def after_login(self, response) -> None:
+    def after_login(self, response: scrapy.http.Response) -> None:
         goodreads_urls = response.css('div.quote span a[href^="http://"]::attr(href)').get()
         logging.info(f'IF LOGIN SUCCESSFUL: {goodreads_urls}')
 
@@ -44,7 +42,7 @@ class AuthorsSpider(scrapy.Spider):
         yield from self.parse(response)  # вызываем parse с текущей страницы
 
 
-    def parse(self, response):
+    def parse(self, response: scrapy.http.Response) -> Union[scrapy.http.Response, dict]:
         logging.info('INITIATE PARSING')
         authors = response.css('div.quote span a::attr(href)').getall()
         external_urls = response.css('div.quote span a[href^="http://"]::attr(href)').getall()

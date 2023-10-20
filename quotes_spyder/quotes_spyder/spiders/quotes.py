@@ -7,6 +7,7 @@ import scrapy, logging
 # Настройка логгирования
 logging.basicConfig(filename='app.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
+# scrapy crawl quotes
 
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
